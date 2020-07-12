@@ -4,32 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link type="text/css" href="src/css/style.css" rel="stylesheet">
-    <link rel="icon" href="src/img/logo.png" type="image/png">
+    <link href="../static/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="../static/img/logo.png" type="image/png">
     <title>Dettol - Join Me On The Cool Team</title>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <div>
-            <img src="src/img/logo.png" alt="Logo" width="100px" height="auto">
+            <img src="../static/img/logo.png" alt="Logo" width="100px" height="auto">
         </div>
     </header>
     <main>
         <section>
-            <img src="src/img/team-mockup.png" alt="Join Me On The Winning Team - Jersey" class="mockup">
+            <img src="../static/img/team-mockup.png" alt="Join Me On The Cool Team - Jersey" class="mockup">
         </section>
         <section>
+            <!-- Take user name and jersey number-->
             <div class="form-control">
-                <form enctype="multipart/form-data" action="" method="POST">
+                <form enctype="multipart/form-data" action="/generate" method="GET">
                     <div style="margin-bottom: 10px;">
-                        <input placeholder="Name" required="" id="username" name="username" type="text" />
+                        <input placeholder="Name" required="" id="username" name="username" type="text"  />
                     </div>
                     <div>
-                        <input placeholder="Jersey Number" required="" id="jerseynumber" name="jerseynumber" type="text" />
+                        <input placeholder="Jersey Number" required="" id="number" name="number" type="text" />
                     </div>
                     <div class="button">
                         <button value="submit" type="submit" class="submit-button">Join The Team</button>
+                    </div>
+                    <div class="button">
+                        <button value="submit" type="submit" class="submit-button two">Download</button>
                     </div>
                 </form>
             </div>
@@ -39,5 +43,6 @@
         <p>&copy; Dettol, 2020. Join Me On The Cool Team!<!--Designed by
             <a href="https://mirrortech.xyz" >Mirror Technologies</a> & Geek Tutor--></p>
     </footer>
+    <script src="../app.js"></script>
 </body>
 </html>

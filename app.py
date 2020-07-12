@@ -3,6 +3,7 @@ import os
 from urllib.parse import urljoin
 from PIL import Image, ImageFont, ImageDraw
 from flask import Flask, request, url_for, redirect
+from flask import render_template
 
 app = Flask(__name__)
 BASE_PATH = os.path.dirname(__file__)
@@ -13,8 +14,12 @@ GENERATED_PATH = os.path.join(STATIC_PATH, "generated")
 
 @app.route("/")
 def index():
-    return "Hello World"
+    return render_template('index.html')
 
+if __name__ == '__main__':
+   app.run()
+#def index():
+#    return "Hello World"
 
 @app.route("/generate/")
 def generate():

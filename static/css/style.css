@@ -71,7 +71,11 @@ input[type=text]:focus {
     -ms-transition: all 0.30s ease-in-out;
     -o-transition: all 0.30s ease-in-out;
     outline: none;
-    border: 2px solid #DDDDDD;
+    border: 2px solid #83c234;
+}
+
+.active{
+    border: 2px solid #83c234;
 }
 
 .form-control {
@@ -131,7 +135,9 @@ input[type=text]:focus {
     transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
     background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
+.two{
+    display: none;
+}
 /*button[value="submit"] {
     display: block;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
