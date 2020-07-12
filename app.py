@@ -18,29 +18,29 @@ def index():
 
 @app.route("/generate/")
 def generate():
-    certificate = make_certificate("jersey.jpeg", **request.args)
+    certificate = make_certificate(**request.args)
     return redirect(certificate)
 
 def delete_file(img_title):
     os.unlink(os.path.join(GENERATED_PATH, img_title))
 
-def make_certificate(filename, username, number):
+def make_certificate(username, number):
     # set certificate style
     font = "PTSans-Bold.ttf"
     track_font = "LeagueSpartan-Bold.otf"
 
     # name style
-    color = "#c9a04b"
-    size = 70
-    y = 645
+    color = "#ffffff"
+    size = 58
+    y = 676
 
     # track style
     track_color = "#ffffff"
-    track_size = 40
+    track_size = 70
 
     # name text
-    text = "{} {}".format(username, number).upper()
-    raw_img = Image.open(os.path.join(CERTIFICATE_PATH, filename))
+    text = "{}".format(username).upper()
+    raw_img = Image.open(os.path.join(CERTIFICATE_PATH, "jersey.jpeg"))
     img = raw_img.copy()
     draw = ImageDraw.Draw(img)
 
@@ -48,15 +48,17 @@ def make_certificate(filename, username, number):
     PIL_font = ImageFont.truetype(os.path.join(FONT_PATH, font), size)
     w, h = draw.textsize(text, font=PIL_font)
     W, H = img.size
-    x = (W - w) / 2
+    print(w)
+    x = 382.603000431 +  ((272.780888595 - w) / 2)
     draw.text((x, y), text, fill=color, font=PIL_font)
 
     # draw number
     PIL_font = ImageFont.truetype(os.path.join(FONT_PATH, track_font), track_size)
-    track_text = "{} {}".format(username, jersey)
+    track_text = "{}".format(number)
     w, h = draw.textsize(track_text, font=PIL_font)
     W, H = img.size
-    x, y = (W - w) / 2, 840
+    x = 385.431 + ((269.000 - w) / 2)
+    y = 796.871
     draw.text((x, y), track_text, fill=track_color, font=PIL_font)
 
     # save certificate
