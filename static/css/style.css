@@ -151,6 +151,15 @@ button[type="submit"]:hover {
     color: #fff;
 }
 
+.so-button {
+    color: #ffffff;
+    background: #83c234;
+    padding: 15px 25px 15px 25px;
+    font-size: 40px;
+    font-weight: bold;
+
+}
+
 /* field placeholder */
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */

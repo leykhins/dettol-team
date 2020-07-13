@@ -74,6 +74,12 @@ def make_certificate(username, number):
     base_64 =  urljoin(request.host_url, url_for("static", filename="generated/" + img_title))
 
     return base_64
+
+# handling error 404 - Page not found
+@app.errorhandler(404)
+def page_not_found(error):
+   return render_template('404.html', title = '404'), 404
+
 # def make_certificate(username, jerseynumber, type, track=None):
 #     def draw_text(filename, type, username, jerseynumber, track=None):
 #         font = "PTSans-Bold.ttf"
