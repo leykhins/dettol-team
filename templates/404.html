@@ -7,7 +7,9 @@
     <link href="../static/css/style.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="../static/img/logo.png" type="image/png">
     <title>Page Not Found - Join Me On The Cool Team</title>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;500&display=swap" rel="stylesheet">
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="../static/css/uikit.css" />
 </head>
 <body>
 <header>
@@ -18,22 +20,35 @@
 <main>
     <section>
         <!-- Take user name and jersey number-->
+        <div style="margin-top: 50px">
+            <img src="../static/img/404.png" alt="404" width="400px" height="auto" />
+        </div>
         <div>
-            <img src="../static/img/404.png" alt="404" width="500px" height="auto"/>
             <h2 style="color: #ffffff">Ooops! The page you are looking for does not exist!</h2>
             <p style="color: #ffffff">If you are trying to redownload your generated image<br/>
                 we do not save any of the information you upload, you have to start over.
             </p>
         </div>
-        <div class="so-button">
-            <button value="submit" type="submit" class="submit-button">START OVER!</button>
+        <div style="margin-top: 50px">
+            <a href="{{ url_for('index') }}" class="uk-button uk-button-default uk-margin-small-right">START OVER!</a>
+            <button class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-slide">Whats the cool team?</button>
+        </div>
+        <div id="offcanvas-slide" uk-offcanvas="overlay: true">
+            <div class="uk-offcanvas-bar">
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+                <h3>Why Join Us?</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
         </div>
     </section>
 </main>
-<footer>
+<footer style="margin-top: 70px">
     <p>&copy; Dettol, 2020. Join Me On The Cool Team!<!--Designed by
             <a href="https://mirrortech.xyz" >Mirror Technologies</a> & Geek Tutor--></p>
 </footer>
-<script src="../app.js"></script>
+<script src="../static/js/app.js"></script>
+<!-- UIkit JS -->
+<script src="../static/js/uikit.min.js"></script>
+<script src="../static/js/uikit-icons.min.js"></script>
 </body>
 </html>

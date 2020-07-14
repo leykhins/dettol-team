@@ -7,7 +7,9 @@
     <link href="../static/css/style.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="../static/img/logo.png" type="image/png">
     <title>Dettol - Join Me On The Cool Team</title>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;500&display=swap" rel="stylesheet">
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="../static/css/uikit.css" />
 </head>
 <body>
     <header>
@@ -16,30 +18,66 @@
         </div>
     </header>
     <main>
-        <section>
-            <img src="../static/img/team-mockup.png" alt="Join Me On The Cool Team - Jersey" class="mockup">
-        </section>
-        <section>
-            <!-- Take user name and jersey number-->
-            <div class="form-control">
-                <form enctype="multipart/form-data" action="" method="POST">
-                    <div style="margin-bottom: 10px;">
-                        <input placeholder="Name" required="" id="username" name="username" type="text"  />
+        <section class="uk-container">
+            <div class="uk-child-width-1-2@s uk-flex uk-flex-middle" style="justify-content: center;" uk-grid>
+                <div class=" ">
+                    <img src="../static/img/team-mockup.png" alt="Join Me On The Cool Team - Jersey" class="mockup">
+                </div>
+                <div class="uk-align-center" style="text-align: center; justify-content: center;" uk-grid>
+                    <!-- Take user name and jersey number-->
+                    <div class="uk-flex-center@s">
+                        <form class="uk-grid-small" enctype="multipart/form-data" action=" " method="POST" uk-grid>
+                            <div class="uk-width-1-1 uk-inline">
+                                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: user"></span>
+                                <input class="uk-input" placeholder="Name" required="" id="username"
+                                       name="username" type="text"  />
+                            </div>
+                            <div class="uk-width-1-1 uk-inline">
+                                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: upload"></span>
+                                <input class="uk-input" placeholder="Jersey Number" required="" id="number"
+                                           name="number" type="text" />
+                            </div>
+                            <div class="uk-width-1-1 uk-inline">
+                                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: mail"></span>
+                                <input class="uk-input" placeholder="Email" required="" name="email" type="text"  />
+                            </div>
+                            <div class="uk-width-1-1 uk-inline">
+                                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: phone"></span>
+                                <input class="uk-input" placeholder="Phone Number" required=""
+                                       name="phone-number" type="text"  />
+                            </div>
+                            <div class="uk-align-center">
+                                <button value="submit" type="submit"
+                                        class="uk-button uk-button-default uk-margin" onclick="loading();">
+                                    Join The Team</button>
+                            </div>
+                        </form>
+                        <div style="text-align: center; padding-top: 5px;">
+                            <a class="a-button" type="button" uk-toggle="target: #offcanvas-slide">
+                                Whats the cool team?</a>
+                        </div>
                     </div>
-                    <div>
-                        <input placeholder="Jersey Number" required="" id="number" name="number" type="text" />
-                    </div>
-                    <div class="button">
-                        <button value="submit" type="submit" class="submit-button" onclick="loading();">Join The Team</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </section>
+        <div id="offcanvas-slide" uk-offcanvas="overlay: true">
+            <div class="uk-offcanvas-bar">
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+                <h3>Why Join Us?</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                    ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitationullamco
+                    laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+        </div>
     </main>
-    <footer>
+    <footer style="padding-top: 150px;">
         <p>&copy; Dettol, 2020. Join Me On The Cool Team!<!--Designed by
             <a href="https://mirrortech.xyz" >Mirror Technologies</a> & Geek Tutor--></p>
     </footer>
     <script src="../app.js"></script>
+    <!-- UIkit JS -->
+    <script src="../static/js/uikit.min.js"></script>
+    <script src="../static/js/uikit-icons.min.js"></script>
 </body>
 </html>
