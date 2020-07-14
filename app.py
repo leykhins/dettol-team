@@ -4,9 +4,8 @@ from urllib.parse import urljoin
 from PIL import Image, ImageFont, ImageDraw
 from flask import Flask, request, url_for, redirect
 from flask import render_template, send_file
-from werkzeug import secure_filename
-import cv2
-import numpy as np
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
 BASE_PATH = os.path.dirname(__file__)
@@ -15,9 +14,14 @@ FONT_PATH = os.path.join(STATIC_PATH, "fonts")
 CERTIFICATE_PATH = os.path.join(STATIC_PATH, "certificates")
 GENERATED_PATH = os.path.join(STATIC_PATH, "generated")
 
-@app.route("/")
+@app.route("/", methods={'GET', 'POST'})
 def index():
-    return render_template('index.html')
+    if request.method == 'GET':
+        return render_template('index.html')
+    elif request.method == 'POST':
+        username, number = request.form.get('username'), request.form.get('number')
+        certificate = make_certificate(username, number)
+    return send_file(certificate, as_attachment=True, mimetype='image.png', attachment_filename='gen.png')
 
 @app.route("/generate/")
 def generate():
@@ -69,19 +73,27 @@ def make_certificate(username, number):
     img.save(os.path.join(GENERATED_PATH, img_title))
     task = Timer(30, delete_file, (img_title,))
     task.start()
-    base_64 = urljoin(request.host_url, url_for("static", filename="generated/" + img_title))
-    return base_64
+    #base_64 = urljoin(request.host_url, url_for("static", filename="generated/" + img_title))
+    return os.path.join(GENERATED_PATH, img_title)
 
 def download():
     try:
         image = request.files['img_title']
         nom_image = secure_filename(image.filename)
         image = Image.open(image)
-        image.save('Downloads'+nom_image)
+        image.save(file_path + nom_image)
         return send_file(file_path, as_attachment=True, attachment_filename='cert.png')
     except Exception as e:
         print(e)
         return redirect(url_for('upload'))
+
+def write_to_csv(data):
+    with open('database.csv', mode='a', newline='') as database2:
+        email = data['']
+        subject = data['subject']
+        message = data['message']
+        csv_write = csv.writer(database2, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        csv_write.writerow([email,subject,message])
 
 # @app.route('/download/', methods=['POST'])
 # def download():
