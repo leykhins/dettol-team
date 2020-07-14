@@ -3,7 +3,9 @@ import os
 from urllib.parse import urljoin
 from PIL import Image, ImageFont, ImageDraw
 from flask import Flask, request, url_for, redirect
-from flask import render_template
+from flask import render_template, send_file
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
 BASE_PATH = os.path.dirname(__file__)
@@ -12,14 +14,14 @@ FONT_PATH = os.path.join(STATIC_PATH, "fonts")
 CERTIFICATE_PATH = os.path.join(STATIC_PATH, "certificates")
 GENERATED_PATH = os.path.join(STATIC_PATH, "generated")
 
-@app.route("/")
+@app.route("/", methods={'GET', 'POST'})
 def index():
-    return render_template('index.html')
-
-if __name__ == '__main__':
-   app.run()
-#def index():
-#    return "Hello World"
+    if request.method == 'GET':
+        return render_template('index.html')
+    elif request.method == 'POST':
+        username, number = request.form.get('username'), request.form.get('number')
+        certificate = make_certificate(username, number)
+    return send_file(certificate, as_attachment=True, mimetype='image.png', attachment_filename='gen.png')
 
 @app.route("/generate/")
 def generate():
@@ -71,77 +73,46 @@ def make_certificate(username, number):
     img.save(os.path.join(GENERATED_PATH, img_title))
     task = Timer(30, delete_file, (img_title,))
     task.start()
-    base_64 =  urljoin(request.host_url, url_for("static", filename="generated/" + img_title))
+    #base_64 = urljoin(request.host_url, url_for("static", filename="generated/" + img_title))
+    return os.path.join(GENERATED_PATH, img_title)
 
-    return base_64
+def download():
+    try:
+        image = request.files['img_title']
+        nom_image = secure_filename(image.filename)
+        image = Image.open(image)
+        image.save(file_path + nom_image)
+        return send_file(file_path, as_attachment=True, attachment_filename='cert.png')
+    except Exception as e:
+        print(e)
+        return redirect(url_for('upload'))
+
+def write_to_csv(data):
+    with open('database.csv', mode='a', newline='') as database2:
+        email = data['']
+        subject = data['subject']
+        message = data['message']
+        csv_write = csv.writer(database2, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        csv_write.writerow([email,subject,message])
+
+# @app.route('/download/', methods=['POST'])
+# def download():
+#     try:
+#         image = request.files['img_title']
+#         nom_image = secure_filename(image.filename)
+#         image = Image.open(image)
+#         ...
+#         image.save('/home/modificateurimage/mysite/static/images/'+nom_image)
+#         return send_file('/home/modificateurimage/mysite/static/images/'+nom_image, mimetype='image/jpeg', attachment_filename=nom_image, as_attachment=True), os.remove('/home/modificateurimage/mysite/static/images/'+nom_image)
+
+#     except Exception as e:
+#         print(e)
+#         return redirect(url_for('upload'))
 
 # handling error 404 - Page not found
 @app.errorhandler(404)
 def page_not_found(error):
-   return render_template('404.html', title = '404'), 404
-
-# def make_certificate(username, jerseynumber, type, track=None):
-#     def draw_text(filename, type, username, jerseynumber, track=None):
-#         font = "PTSans-Bold.ttf"
-#         color = "#ff0000"
-#         size = 50
-#         track_color = "#000000"
-#         track_size = 20
-#         y = 350
-#         x = 0
-#         text = "{} {}".format(username, jerseynumber).upper()
-#         if type == "2":
-#             font = "LeagueSpartan-Bold.otf"
-#             size = 60
-#             color = "#e05a47"
-#             y = 175
-#             x = 88
-#             text = "{}\n{}".format(username, jerseynumber).upper()
-#         raw_img = Image.open(os.path.join("certificates", filename))
-#         img = raw_img.copy()
-#         draw = ImageDraw.Draw(img)
-
-#         # draw name
-#         if username:
-#             PIL_font = ImageFont.truetype(os.path.join("fonts", font), size)
-#             w, h = draw.textsize(text, font=PIL_font)
-#             W, H = img.size
-#             x = (W - w) / 2 if x == 0 else x
-#             draw.text((x, y), text, fill=color, font=PIL_font)
-#         img_url = os.path.join("static", "{}-{}-Join-Me-On-The-Cool-Team.png".format(username, jerseynumber, type))
-#         img.save(img_url)
-#         return request.host_url + img_url
-
-#2
-        # draw track
-        #if track:
-        #    PIL_font = ImageFont.truetype(os.path.join("fonts", font), track_size)
-        #    w, h = draw.textsize(track, font=PIL_font)
-        #    x, y = 183, 450
-        #    draw.text((x, y), track, fill=track_color, font=PIL_font)
-        #img_url = os.path.join("static", "{}-{}-{}-Join-Me-On-The-Winning-Team.png".format(username, jerseynumber, type))
-        #img.save(img_url)
-        #return request.host_url + img_url
-
-#new code
-    # base_64 = draw_text("framed.png", type, username, jerseynumber)
-    # return base_64
-
-    #tracks = {"frontend": "Front-End Web Development", "backend": "Back-End Web Development", "python": "Python Programming", "android": "Mobile Development", "ui": "UI/UX Design", "design": "Engineering Design"}
-    #track = tracks.get(track, None)
-    #    base_64 = draw_text("framed.png", type, first_name, last_name, track)
-    #if type == "3":
-    #    base_64 = draw_text("average performace.jpg", type, first_name, last_name, track)
-    #if type == "4":
-    #    base_64 = draw_text("good performance.jpg", type, first_name, last_name, track)
-    #if type == "5":
-    #    base_64 = draw_text("outstanding.jpg", type, first_name, last_name, track)
-    #if type == "1":
-    #    base_64 = draw_text("participated.jpg", type, first_name, last_name)
-    #if type == "2":
-    #    base_64 = draw_text("mentor.jpg", type, first_name, last_name)
-    #return base_64
-
+   return render_template('404.html', title='404'), 404
 
 if __name__ == "__main__":
     app.run(debug=True)

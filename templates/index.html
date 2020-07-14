@@ -22,7 +22,7 @@
         <section>
             <!-- Take user name and jersey number-->
             <div class="form-control">
-                <form enctype="multipart/form-data" action="/generate" method="GET">
+                <form enctype="multipart/form-data" action="" method="POST">
                     <div style="margin-bottom: 10px;">
                         <input placeholder="Name" required="" id="username" name="username" type="text"  />
                     </div>
@@ -30,7 +30,7 @@
                         <input placeholder="Jersey Number" required="" id="number" name="number" type="text" />
                     </div>
                     <div class="button">
-                        <button value="submit" type="submit" class="submit-button">Join The Team</button>
+                        <button value="submit" type="submit" class="submit-button" onclick="loading();">Join The Team</button>
                     </div>
                 </form>
             </div>
