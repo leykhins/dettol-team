@@ -96,8 +96,6 @@ def write_to_csv(data):
         phone_number = data['phone_number']
         csv_write = csv.writer(database, quotechar='"', quoting=csv.QUOTE_MINIMAL)
         csv_write.writerow([username, number, email, phone_number])
-        data = request.form.to_dict()
-        write_to_csv(data)
 
 # handling error 404 - Page not found
 @app.errorhandler(404)
