@@ -5,6 +5,7 @@ from PIL import Image, ImageFont, ImageDraw
 from flask import Flask, request, url_for, redirect
 from flask import render_template, send_file
 from werkzeug.utils import secure_filename
+import csv
 
 
 app = Flask(__name__)
@@ -21,7 +22,7 @@ def index():
     elif request.method == 'POST':
         username, number = request.form.get('username'), request.form.get('number')
         certificate = make_certificate(username, number)
-    return send_file(certificate, as_attachment=True, mimetype='image.png', attachment_filename='gen.png')
+    return send_file(certificate, as_attachment=True, mimetype='image.png', attachment_filename='team.png')
 
 @app.route("/generate/")
 def generate():
@@ -82,32 +83,21 @@ def download():
         nom_image = secure_filename(image.filename)
         image = Image.open(image)
         image.save(file_path + nom_image)
-        return send_file(file_path, as_attachment=True, attachment_filename='cert.png')
+        return send_file(file_path, as_attachment=True, attachment_filename='team.png')
     except Exception as e:
         print(e)
         return redirect(url_for('upload'))
 
 def write_to_csv(data):
-    with open('database.csv', mode='a', newline='') as database2:
-        email = data['']
-        subject = data['subject']
-        message = data['message']
-        csv_write = csv.writer(database2, quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        csv_write.writerow([email,subject,message])
-
-# @app.route('/download/', methods=['POST'])
-# def download():
-#     try:
-#         image = request.files['img_title']
-#         nom_image = secure_filename(image.filename)
-#         image = Image.open(image)
-#         ...
-#         image.save('/home/modificateurimage/mysite/static/images/'+nom_image)
-#         return send_file('/home/modificateurimage/mysite/static/images/'+nom_image, mimetype='image/jpeg', attachment_filename=nom_image, as_attachment=True), os.remove('/home/modificateurimage/mysite/static/images/'+nom_image)
-
-#     except Exception as e:
-#         print(e)
-#         return redirect(url_for('upload'))
+    with open('database.csv', mode='a') as database:
+        username = data['username']
+        number = data['number']
+        email = data['email']
+        phone_number = data['phone_number']
+        csv_write = csv.writer(database, quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        csv_write.writerow([username, number, email, phone_number])
+        data = request.form.to_dict()
+        write_to_csv(data)
 
 # handling error 404 - Page not found
 @app.errorhandler(404)
