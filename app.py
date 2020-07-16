@@ -21,6 +21,7 @@ def index():
         return render_template('index.html')
     elif request.method == 'POST':
         username, number = request.form.get('username'), request.form.get('number')
+        write_to_csv(request.form)
         certificate = make_certificate(username, number)
     return send_file(certificate, as_attachment=True, mimetype='image.png', attachment_filename='team.png')
 
@@ -93,7 +94,7 @@ def write_to_csv(data):
         username = data['username']
         number = data['number']
         email = data['email']
-        phone_number = data['phone_number']
+        phone_number = data['phone-number']
         csv_write = csv.writer(database, quotechar='"', quoting=csv.QUOTE_MINIMAL)
         csv_write.writerow([username, number, email, phone_number])
 
