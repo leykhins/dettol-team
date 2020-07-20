@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="../static/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="../static/img/logo.png" type="image/png">
+    <title>Dettol - Join Me On The Cool Team</title>
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="../static/css/uikit.css" />
+</head>
+<body>
+
+    <main>
+        <section class="uk-container">
+            <div class="uk-child-width-1-2@s uk-flex uk-flex-middle" style="justify-content: center;" uk-grid>
+                <div class=" ">
+                    <img src="{{ context.generated_file_path }}" alt="Join Me On The Cool Team - Jersey">
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; Dettol, 2020. Join Me On The Cool Team!<!--Designed by
+            <a href="https://mirrortech.xyz" >Mirror Technologies</a> & Geek Tutor--></p>
+    </footer>
+    <script>
+        var file_path = '{{ context.generated_file_path }}';
+        console.log(file_path)
+        var a = document.createElement('A');
+        a.href = file_path;
+        a.download = file_path.substr(file_path.lastIndexOf('/') + 1);
+        console.log(file_path.substr(file_path.lastIndexOf('/') + 1))
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    </script>
+    <!-- UIkit JS -->
+    <script src="../static/js/uikit.min.js"></script>
+    <script src="../static/js/uikit-icons.min.js"></script>
+</body>
+</html>
